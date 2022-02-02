@@ -5,3 +5,5 @@ https://bahir.apache.org/docs/flink/1.0/flink-streaming-redis/
 
 从socket获取数据
 nc -lk 9999
+
+# 监控

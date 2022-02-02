@@ -14,7 +14,7 @@ import org.apache.flink.util.Collector;
 
 /**
  * 数据写入redis
- * https://bahir.apache.org/docs/flink/1.0/flink-streaming-redis/
+ *
  */
 public class RedisDemo {
     public static void main(String[] args) throws Exception {

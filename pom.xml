@@ -305,7 +305,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <!-- 设置jar入口类 -->
-                                    <mainClass>com.example.RedisDemo</mainClass>
+                                    <mainClass>com.example.MetricsDemo</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
