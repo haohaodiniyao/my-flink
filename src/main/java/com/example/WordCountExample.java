@@ -5,6 +5,7 @@ import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.util.Collector;
 
 public class WordCountExample {
@@ -20,7 +21,7 @@ public class WordCountExample {
             .sum(1);
 
 //        wordCounts.print();
-        wordCounts.writeAsText(output);
+        wordCounts.writeAsText(output, FileSystem.WriteMode.OVERWRITE);
         env.execute();
     }
 
