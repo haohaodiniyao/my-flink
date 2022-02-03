@@ -7,3 +7,5 @@ https://bahir.apache.org/docs/flink/1.0/flink-streaming-redis/
 nc -lk 9999
 
 # 监控
+# 手动savepoint
+flink savepoint XXX pathss

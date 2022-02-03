@@ -48,8 +48,9 @@
                 </filter>
               </filters>
               <transformers>
+                <transformer />
                 <transformer>
-                  <mainClass>com.example.MetricsDemo</mainClass>
+                  <mainClass>com.example.FlinkSQLKafkaDemo</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -64,11 +65,45 @@
       <url>http://maven.aliyun.com/nexus/content/groups/public</url>
     </repository>
   </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-planner-blink_2.12</artifactId>
+      <version>1.12.7</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-runtime-blink_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>reflections</artifactId>
+          <groupId>org.reflections</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-statebackend-rocksdb_2.12</artifactId>
+      <version>1.14.3</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>frocksdbjni</artifactId>
+          <groupId>com.ververica</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-shaded-force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
   <properties>
     <scala.version>2.12</scala.version>
     <java.version>1.8</java.version>
     <encoding>UTF-8</encoding>
-    <flink.version>1.12.0</flink.version>
+    <flink.version>1.12.7</flink.version>
     <maven.compiler.source>8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>8</maven.compiler.target>

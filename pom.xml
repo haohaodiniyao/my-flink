@@ -22,7 +22,7 @@
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
         <scala.version>2.12</scala.version>
-        <flink.version>1.12.0</flink.version>
+        <flink.version>1.12.7</flink.version>
     </properties>
 
     <dependencies>
@@ -59,6 +59,11 @@
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-api-java-bridge_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-scala-bridge_2.12</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!-- flink执行计划 1.9之前 -->
@@ -310,9 +315,10 @@
                                 </filter>
                             </filters>
                             <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <!-- 设置jar入口类 -->
-                                    <mainClass>com.example.MetricsDemo</mainClass>
+                                    <mainClass>com.example.FlinkSQLKafkaDemo</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
