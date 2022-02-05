@@ -8,4 +8,8 @@ nc -lk 9999
 
 # 监控
 # 手动savepoint
-flink savepoint XXX pathss
+flink savepoint XXX path
+# flink时间
+## 事件事件（产生时间）
+## 到达flink时间
+## flink处理时间
