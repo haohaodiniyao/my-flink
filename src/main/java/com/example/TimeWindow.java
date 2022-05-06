@@ -12,34 +12,40 @@ import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeW
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
-public class WindowDemo2 {
+/**
+ * 时间窗口
+ * 统计每1分钟用户购买的商品数量
+ */
+public class TimeWindow {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         DataStreamSource<String> textStream = env.socketTextStream("localhost", 9999);
-        SingleOutputStreamOperator<MyData> map = textStream.map(new MapFunction<String, MyData>() {
+        SingleOutputStreamOperator<OrderData> map = textStream.map(new MapFunction<String, OrderData>() {
             @Override
-            public MyData map(String s) throws Exception {
+            public OrderData map(String s) throws Exception {
+                //1,1
+                //1,1
                 String[] arr = s.split(",");
-                return new MyData(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
+                return new OrderData(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
             }
         });
         //分组
-        KeyedStream<MyData, Integer> keyedStream = map.keyBy(MyData::getId);
+        KeyedStream<OrderData, Integer> keyedStream = map.keyBy(OrderData::getUserId);
+        //1、滚动时间窗口，无重叠，窗口大小1分钟
+//        SingleOutputStreamOperator<OrderData> count1 = keyedStream.window(TumblingProcessingTimeWindows.of(Time.minutes(1))).sum("buyCnt");
+//        count1.print();
 
-        //1、分组之后，最近5条消息，相同key每出现5次进行统计，滚动
-        SingleOutputStreamOperator<MyData> count = keyedStream.countWindow(5).sum("count");
-        count.print();
-        //2、分组之后，最近5条消息，相同key每出现3次进行统计，滑动
-        count = keyedStream.countWindow(5,3).sum("count");
-        count.print();
+        //2、滑动时间窗口，有重叠，每30秒计算一次最近1分钟用户购买的商品数量
+        SingleOutputStreamOperator<OrderData> count2 = keyedStream.window(SlidingProcessingTimeWindows.of(Time.minutes(1), Time.seconds(30))).sum("buyCnt");
+        count2.print();
 
         env.execute();
     }
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MyData{
-        private Integer id;//红绿灯编号
-        private Integer count;//通过车辆数
+    public static class OrderData{
+        private Integer userId;
+        private Integer buyCnt;
     }
 }
